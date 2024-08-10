@@ -41,7 +41,7 @@ public class TinyDbSession implements Session {
             while((len = in.read(buf)) != -1) {
                 int i = 0;
                 while (i < len && buf[i] != 0) { i++; }
-                String line = new String(buf, 0, i,StandardCharsets.UTF_8).trim();
+                String line = new String(buf, 0, i, StandardCharsets.UTF_8).trim();
                 /* If meeting over flag, session stop. */
                 if (OVER_FLAG.equals(line))
                     break;

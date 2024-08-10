@@ -3,6 +3,7 @@ package com.tinydb.mapping;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tinydb.annotation.TableColumn;
+import com.tinydb.data.Result;
 import com.tinydb.exceptions.TinyDbParseException;
 import com.tinydb.utils.Assert;
 import lombok.SneakyThrows;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class FastjsonMapping implements Mapping {
     @Override
-    public <T> T mapping(String text, Class<T> clazz) {
+    public List<T> mapping(String text, Class<T> clazz) {
         /* Check if arrayed, only allow one data or null. */
         if (text.startsWith("[") && text.endsWith("]")) {
             List<JSONObject> list = JSONObject.parseArray(text, JSONObject.class);
@@ -26,14 +27,6 @@ public class FastjsonMapping implements Mapping {
             return this.substitute(JSONObject.parseObject(text, JSONObject.class), clazz);
         else
             throw new TinyDbParseException(String.format("Can`t parse text '%s' to json or json array.", text));
-    }
-
-    @Override
-    public <T> List<T> batchMapping(String text, final Class<T> clazz) {
-        List<JSONObject> list = JSONObject.parseArray(text, JSONObject.class);
-        return list.stream()
-                .map(it -> this.substitute(it, clazz))
-                .collect(Collectors.toList());
     }
 
     /**

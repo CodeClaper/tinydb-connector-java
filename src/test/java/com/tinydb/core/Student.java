@@ -8,7 +8,7 @@ import lombok.Data;
  * This is an entity mapping table student.
  */
 @Data
-@TableName(value = "student")
+@TableName(value = "Student")
 public class Student {
 
     @TableId
@@ -17,10 +17,14 @@ public class Student {
     @TableColumn(value = "name")
     private String name;
 
+    @TableColumn(value = "age")
+    private int age;
+
+    @TableColumn(value = "sex")
+    private char sex;
+
     /* Notice: `class` is keyword in java, so we use `class` as substitute */
     @TableColumn(value = "class")
-    private String clazz;
+    private Class clazz;
 
-    @TableColumn(value = "male")
-    private char male;
 }

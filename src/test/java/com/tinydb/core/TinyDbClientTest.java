@@ -31,7 +31,7 @@ public class TinyDbClientTest {
     @Test
     public void selectBatch() {
         TinyDbClient client = new TinyDbClient(HOST, PORT);
-        List<Student> sts = client.selectBatch("select * from student", Student.class);
+        List<Student> sts = client.selectBatch("select * from Student", Student.class);
         Assert.assertFalse(sts.isEmpty());
     }
 
@@ -40,10 +40,10 @@ public class TinyDbClientTest {
         String[] names = {"zhangsan", "lisi", "wangwu", "liuliu", "bemki", "Bugud"};
         String[] addressList = {"beijing", "shanghai", "shenzhen", "ningbo", "xian",  "jinan", "qingdao", "guangzhou", "chongqing" };
         try (TinyDbSession session = new TinyDbSession(HOST, PORT)) {
-           for (int i = 0; i <= 100000; i++) {
+           for (int i = 0; i <= 10000; i++) {
                String name = names[i % names.length];
                String address = addressList[i % addressList.length];
-               String sql = String.format("insert into test values('%d', '%s', '%s')", i, name, address);
+               String sql = String.format("insert into A values('%d', '%s')", i, name);
                System.out.println(i + "=====>" + session.sendAndRec(sql));
            }
        } catch (TinyDbConnectException | TinyDbIOException e) {
